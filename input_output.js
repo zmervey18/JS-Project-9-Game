@@ -31,9 +31,9 @@ export function startGame() {
     },
 
     monsterTurn: {
-      message: "Monster's turn! \n" + "You're dead!",
-      yes: quit,
-      no: quit,
+      message: "Monster's turn! \n",
+      yes: "playerTurn",
+      no: "playerTurn",
     },
 
     //Old stuff
@@ -79,6 +79,7 @@ export function startGame() {
 
   function startAction(){
     console.log("Let's play! You're turn!");
+    logicStep();
   }
 
   //Players action
@@ -113,7 +114,10 @@ export function startGame() {
 
     if ( currentStep === "start" ) {
       readline.question(`${step.message || ""} `, (input) => { startAction(input); });
+      playerStats();
+      monsterStats();
       currentStep = "playerTurn";
+
     } else if (currentStep === "playerTurn"){
       readline.question(`${step.message || ""} `, (input) => { attackDefendOrFlee(input); });
       
@@ -126,7 +130,7 @@ export function startGame() {
       }
 
     } else if ( currentStep === "monsterTurn"){
-      readline.question(`${step.message || ""} `, () => { monsterAttack(); });
+      readline.question(`${step.message || ""} `, () => { monsterAction(); });
       
       //End if player killed
       if(true){
@@ -135,14 +139,13 @@ export function startGame() {
       else{
         currentStep = "end";
       }
+
     } else {
       console.log("Try again");
       currentStep = "start";
     }
 
-    playerStats();
-    monsterStats();
-    logicStep();
+    
   }
 
 
@@ -150,7 +153,10 @@ export function startGame() {
   //New old
 
   let currentStep = "start";
-  
+  console.log("\n");
+  playerStats();
+  monsterStats();
+  logicStep();
   
 
   //Old code
