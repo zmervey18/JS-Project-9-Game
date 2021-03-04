@@ -26,20 +26,8 @@ export function startGame() {
     playerTurn: {
       message: "Would you like to attack, defend or flee? attack/defend/flee",
       attack: "monsterTurn",
-      defend: "playerDefend",
+      defend: "monsterTurn",
       flee: "monsterTurn",
-    },
-
-    playerDefend: {
-      message: "Would you like to defend? yes/no",
-      yes: "monsterTurn",
-      no: "playerFlee",
-    },
-
-    playerFlee: {
-      message: "Would you like to flee? yes/no",
-      yes: "monsterTurn",
-      no: "monsterTurn",
     },
 
     monsterTurn: {
@@ -80,6 +68,8 @@ export function startGame() {
       -If player health < 0, quit
   -Return to player chooses attack  
   */
+
+  //Replace with stats display
   function playerStats(){
     console.log("Player stats:");
   } 
@@ -87,6 +77,11 @@ export function startGame() {
     console.log("Monster stats:");
   } 
 
+  function startAction(){
+    console.log("Let's play! You're turn!");
+  }
+
+  //Players action
   function attackDefendOrFlee(input){
     if(input == "attack"){
       console.log("You have attacked!");
@@ -104,81 +99,103 @@ export function startGame() {
       //Repeat question
     }
   }
+  
+  //Monsters action
+  function monsterAction(){
+    //Random action of monster
+    console.log("Monster action");
+  }
 
-
-  let currentStep = "start";
-
-  function gameStep() {
+  //What action is done depending on the step
+  function logicStep() {
+    //
     const step = steps[currentStep];
+
+    if ( currentStep === "start" ) {
+      readline.question(`${step.message || ""} `, (input) => { startAction(input); });
+      currentStep = "playerTurn";
+    } else if (currentStep === "playerTurn"){
+      readline.question(`${step.message || ""} `, (input) => { attackDefendOrFlee(input); });
+      
+      //End if monster killed
+      if(true){
+        currentStep = "monsterTurn";
+      }
+      else{
+        currentStep = "end";
+      }
+
+    } else if ( currentStep === "monsterTurn"){
+      readline.question(`${step.message || ""} `, () => { monsterAttack(); });
+      
+      //End if player killed
+      if(true){
+        currentStep = "playerTurn";
+      }
+      else{
+        currentStep = "end";
+      }
+    } else {
+      console.log("Try again");
+      currentStep = "start";
+    }
 
     playerStats();
     monsterStats();
+    logicStep();
+  }
 
-    if( step === "playerTurn"){
 
-    }
+
+  //New old
+
+  let currentStep = "start";
   
-
-
-
-
-
-    if(step){
-      readline.question( `${step.message || ""} `, (input) => { gameAction(input); });
-    }
-  }
-
-  function gameAction(action){
-    let step;
-
-    if()
-
-  }
-
+  
 
   //Old code
 
   
 
-  function logStep() {
-    const step = steps[currentStep];
+  // function logStep() {
+  //   const step = steps[currentStep];
 
-    if (step) {
-      readline.question(`${step.message || ""} `, (input) => { handleAnswer(input); });
-    }
-  }
+  //   if (step) {
+  //     readline.question(`${step.message || ""} `, (input) => { handleAnswer(input); });
+  //   }
+  // }
 
-  function handleAnswer(answer) {
-    let step;
+  // function handleAnswer(answer) {
+  //   let step;
 
-    if (answer === "yes") {
-      step = steps[currentStep].yes;
-    } else if (isNumber(answer)) {
-      console.log(`${answer} is all I need. <3`);
-    } else {
-      step = steps[currentStep].no;
-    }
+  //   if (answer === "yes") {
+  //     step = steps[currentStep].yes;
+  //   } else if (isNumber(answer)) {
+  //     console.log(`${answer} is all I need. <3`);
+  //   } else {
+  //     step = steps[currentStep].no;
+  //   }
 
-    if (typeof step === "function") {
-      step();
-      return;
-    }
+  //   if (typeof step === "function") {
+  //     step();
+  //     return;
+  //   }
 
-    if (typeof step === "string") {
-      currentStep = step;
-    } else {
-      currentStep = "end";
-    }
-    logStep();
-  }
+  //   if (typeof step === "string") {
+  //     currentStep = step;
+  //   } else {
+  //     currentStep = "end";
+  //   }
+  //   logStep();
+  // }
 
-  function isNumber(num) {
-    const value = parseInt(num);
-    return !isNaN(value);
-  }
+  // function isNumber(num) {
+  //   const value = parseInt(num);
+  //   return !isNaN(value);
+  // }
 
   console.clear();
-  logStep();
+  logicStep();
 }
 
 // startGame();
