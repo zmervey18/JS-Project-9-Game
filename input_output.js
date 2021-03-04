@@ -73,29 +73,26 @@ export function startGame() {
   function playerStats(){
     console.log("Player stats:");
   } 
+
   function monsterStats(){
     console.log("Monster stats:");
   } 
 
   function startAction(){
-    console.log("Let's play! You're turn!");
-    logicStep();
+    console.log("Let's play! Your turn!");
   }
 
   //Players action
-  function attackDefendOrFlee(input){
-    if(input == "attack"){
+  function attackDefendOrFlee(input, step){
+    if(input === "attack"){
       console.log("You have attacked!");
       //Do attack and change stats
-      step = steps[currentStep].attack;
-    } else if(input == "defend"){
+    } else if(input === "defend"){
       console.log("You have defended!");
       //Defend and change stats
-      step = steps[currentStep].defend;
-    } else if (input == "flee"){
+    } else if (input === "flee"){
       console.log("You have fled!");
       //Flee and shange stats
-      step = steps[currentStep].flee;
     } else {
       //Repeat question
     }
@@ -108,100 +105,103 @@ export function startGame() {
   }
 
   //What action is done depending on the step
-  function logicStep() {
-    //
+  function logStep(){
     const step = steps[currentStep];
 
-    if ( currentStep === "start" ) {
-      readline.question(`${step.message || ""} `, (input) => { startAction(input); });
-      playerStats();
-      monsterStats();
-      currentStep = "playerTurn";
+    if(step){
+      readline.question( `${step.message || ""} `, (input) => { handleAnswer(input); });
+    }
+  }
 
-    } else if (currentStep === "playerTurn"){
-      readline.question(`${step.message || ""} `, (input) => { attackDefendOrFlee(input); });
-      
-      //End if monster killed
-      if(true){
-        currentStep = "monsterTurn";
-      }
-      else{
-        currentStep = "end";
-      }
+  function handleAnswer(answer){
+    let step;
 
-    } else if ( currentStep === "monsterTurn"){
-      readline.question(`${step.message || ""} `, () => { monsterAction(); });
-      
-      //End if player killed
-      if(true){
-        currentStep = "playerTurn";
-      }
-      else{
-        currentStep = "end";
-      }
+    switch(currentStep){
+      case "start" || "end":
+        if (answer === "yes"){
+          step = steps[currentStep].yes;
+        } else {
+          step = steps[currentStep].no;
+        }
+        break;
 
-    } else {
-      console.log("Try again");
-      currentStep = "start";
+      case "playerTurn":
+        attackDefendOrFlee(answer, step);
+        step = "monstersTurn";
+        break;
+
+      case "monsterTurn":
+        monsterAction();
+        step = "playerTurn";
+        break;
+
+      default:
+        console.log("default");
+        quit();
     }
 
-    
+    if (typeof step === "function") {
+      step();
+      return;
+    }
+
+    if (typeof step === "string") {
+      currentStep = step;
+    } else {
+      currentStep = "end";
+    }
+    logStep();
   }
+
+
+
+
+  // function logicStep() {
+  //   //
+  //   const step = steps[currentStep];
+
+  //   if ( currentStep === "start" ) {
+  //     readline.question(`${step.message || ""} `, (input) => { startAction(input); });
+  //     currentStep = "playerTurn";
+
+  //   } else if (currentStep === "playerTurn"){
+  //     readline.question(`${step.message || ""} `, (input) => { attackDefendOrFlee(input); });
+      
+  //     //End if monster killed
+  //     if(true){
+  //       currentStep = "monsterTurn";
+  //     }
+  //     else{
+  //       currentStep = "end";
+  //     }
+
+  //   } else if ( currentStep === "monsterTurn"){
+  //     readline.question(`${step.message || ""} `, () => { monsterAction(); });
+      
+  //     //End if player killed
+  //     if(true){
+  //       currentStep = "playerTurn";
+  //     }
+  //     else{
+  //       currentStep = "end";
+  //     }
+
+  //   } else {
+  //     console.log("Try again");
+  //     currentStep = "start";
+  //   }
+
+  // }
 
 
 
   //New old
 
   let currentStep = "start";
-  console.log("\n");
-  playerStats();
-  monsterStats();
-  logicStep();
-  
-
-  //Old code
-
-  
-
-  // function logStep() {
-  //   const step = steps[currentStep];
-
-  //   if (step) {
-  //     readline.question(`${step.message || ""} `, (input) => { handleAnswer(input); });
-  //   }
-  // }
-
-  // function handleAnswer(answer) {
-  //   let step;
-
-  //   if (answer === "yes") {
-  //     step = steps[currentStep].yes;
-  //   } else if (isNumber(answer)) {
-  //     console.log(`${answer} is all I need. <3`);
-  //   } else {
-  //     step = steps[currentStep].no;
-  //   }
-
-  //   if (typeof step === "function") {
-  //     step();
-  //     return;
-  //   }
-
-  //   if (typeof step === "string") {
-  //     currentStep = step;
-  //   } else {
-  //     currentStep = "end";
-  //   }
-  //   logStep();
-  // }
-
-  // function isNumber(num) {
-  //   const value = parseInt(num);
-  //   return !isNaN(value);
-  // }
-
   console.clear();
-  logicStep();
+  logStep();
 }
+  
+
 
 // startGame();
