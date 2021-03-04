@@ -5,7 +5,7 @@ const readline = createInterface({
   output: process.stdout,
 });
 
-export quit() => {
+export function quit(){
     console.log("Bye then!");
     readline.close();
 }
