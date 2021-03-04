@@ -31,28 +31,10 @@ export function startGame() {
     },
 
     monsterTurn: {
-      message: "Monster's turn! \n",
+      message: "Monster's turn! Press any key",
       yes: "playerTurn",
       no: "playerTurn",
     },
-
-    //Old stuff
-    firstStep: {
-      message: "Do you love me? yes/no",
-      yes: "lovely",
-      no: () => {
-        console.log("Bye then!");
-        readline.close();
-      },
-    },
-    lovely: {
-      message: "Great, how much? 1-10",
-      no: () => {
-        console.log("Bye then!");
-        readline.close();
-      },
-    },
-    // put more steps here
   };
 
   /*
@@ -83,7 +65,7 @@ export function startGame() {
   }
 
   //Players action
-  function attackDefendOrFlee(input, step){
+  function attackDefendOrFlee(input){
     if(input === "attack"){
       console.log("You have attacked!");
       //Do attack and change stats
@@ -101,7 +83,7 @@ export function startGame() {
   //Monsters action
   function monsterAction(){
     //Random action of monster
-    console.log("Monster action");
+    console.log("Monster action!");
   }
 
   //What action is done depending on the step
@@ -119,20 +101,20 @@ export function startGame() {
     switch(currentStep){
       case "start" || "end":
         if (answer === "yes"){
-          step = steps[currentStep].yes;
+          currentStep = "playerTurn";
         } else {
-          step = steps[currentStep].no;
+          quit();
         }
         break;
 
       case "playerTurn":
-        attackDefendOrFlee(answer, step);
-        step = "monstersTurn";
+        attackDefendOrFlee(answer);
+        currentStep = "monsterTurn";
         break;
 
       case "monsterTurn":
         monsterAction();
-        step = "playerTurn";
+        currentStep = "playerTurn";
         break;
 
       default:
@@ -140,16 +122,16 @@ export function startGame() {
         quit();
     }
 
-    if (typeof step === "function") {
-      step();
-      return;
-    }
+    // if (typeof step === "function") {
+    //   step();
+    //   return;
+    // }
 
-    if (typeof step === "string") {
-      currentStep = step;
-    } else {
-      currentStep = "end";
-    }
+    // if (typeof step === "string") {
+    //   currentStep = step;
+    // } else {
+    //   currentStep = "end";
+    // }
     logStep();
   }
 
