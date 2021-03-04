@@ -2,10 +2,4 @@
 import * as io from './input_output.js';
 
 
-function main(){
-
-    io.startGame();
-    
-}
-
-main();
+io.startGame();

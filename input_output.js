@@ -16,21 +16,26 @@ export function startGame() {
       yes: "playerTurn",
       no: quit,
     },
+
     end: {
       message: "Do you want to play again? yes/no",
       yes: "start",
       no: quit,
     },
+
     playerTurn: {
-      message: "Would you like to attack, defend or flee? yes/no",
-      yes: "monsterTurn",
-      no: "playerDefend",
+      message: "Would you like to attack, defend or flee? attack/defend/flee",
+      attack: "monsterTurn",
+      defend: "playerDefend",
+      flee: "monsterTurn",
     },
+
     playerDefend: {
       message: "Would you like to defend? yes/no",
       yes: "monsterTurn",
       no: "playerFlee",
     },
+
     playerFlee: {
       message: "Would you like to flee? yes/no",
       yes: "monsterTurn",
@@ -75,21 +80,71 @@ export function startGame() {
       -If player health < 0, quit
   -Return to player chooses attack  
   */
+  function playerStats(){
+    console.log("Player stats:");
+  } 
+  function monsterStats(){
+    console.log("Monster stats:");
+  } 
+
+  function attackDefendOrFlee(input){
+    if(input == "attack"){
+      console.log("You have attacked!");
+      //Do attack and change stats
+      step = steps[currentStep].attack;
+    } else if(input == "defend"){
+      console.log("You have defended!");
+      //Defend and change stats
+      step = steps[currentStep].defend;
+    } else if (input == "flee"){
+      console.log("You have fled!");
+      //Flee and shange stats
+      step = steps[currentStep].flee;
+    } else {
+      //Repeat question
+    }
+  }
 
 
+  let currentStep = "start";
+
+  function gameStep() {
+    const step = steps[currentStep];
+
+    playerStats();
+    monsterStats();
+
+    if( step === "playerTurn"){
+
+    }
+  
+
+
+
+
+
+    if(step){
+      readline.question( `${step.message || ""} `, (input) => { gameAction(input); });
+    }
+  }
+
+  function gameAction(action){
+    let step;
+
+    if()
+
+  }
 
 
   //Old code
 
-  let currentStep = "start";
+  
 
   function logStep() {
     const step = steps[currentStep];
 
     if (step) {
-      readline.question(`${step.message || ""} `, (input) => {
-        handleAnswer(input);
-      });
+      readline.question(`${step.message || ""} `, (input) => { handleAnswer(input); });
     }
   }
 
@@ -126,4 +181,4 @@ export function startGame() {
   logStep();
 }
 
-startGame();
+// startGame();
