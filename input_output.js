@@ -52,11 +52,8 @@ export function startGame() {
   */
 
   //Replace with stats display
-  function playerStats(){
+  function stats(){
     console.log("Player stats:");
-  } 
-
-  function monsterStats(){
     console.log("Monster stats:");
   } 
 
@@ -122,68 +119,12 @@ export function startGame() {
         quit();
     }
 
-    // if (typeof step === "function") {
-    //   step();
-    //   return;
-    // }
-
-    // if (typeof step === "string") {
-    //   currentStep = step;
-    // } else {
-    //   currentStep = "end";
-    // }
+    stats();
     logStep();
   }
-
-
-
-
-  // function logicStep() {
-  //   //
-  //   const step = steps[currentStep];
-
-  //   if ( currentStep === "start" ) {
-  //     readline.question(`${step.message || ""} `, (input) => { startAction(input); });
-  //     currentStep = "playerTurn";
-
-  //   } else if (currentStep === "playerTurn"){
-  //     readline.question(`${step.message || ""} `, (input) => { attackDefendOrFlee(input); });
-      
-  //     //End if monster killed
-  //     if(true){
-  //       currentStep = "monsterTurn";
-  //     }
-  //     else{
-  //       currentStep = "end";
-  //     }
-
-  //   } else if ( currentStep === "monsterTurn"){
-  //     readline.question(`${step.message || ""} `, () => { monsterAction(); });
-      
-  //     //End if player killed
-  //     if(true){
-  //       currentStep = "playerTurn";
-  //     }
-  //     else{
-  //       currentStep = "end";
-  //     }
-
-  //   } else {
-  //     console.log("Try again");
-  //     currentStep = "start";
-  //   }
-
-  // }
-
-
-
-  //New old
 
   let currentStep = "start";
   console.clear();
   logStep();
 }
   
-
-
-// startGame();
