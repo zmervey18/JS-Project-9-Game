@@ -1,36 +1,34 @@
 import { createInterface } from "readline";
-
 const readline = createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-export function quit(){
-    console.log("Bye then!");
-    readline.close();
+export let quit = () => {
+  console.log("Bye then!");
+  readline.close();
 }
 
 export function startGame() {
   const steps = {
     start: {
-      message: "Do you want to play a game? yes/no",
+      message: "Welcome to the imaginatively titled Project 9 Game \n" + "Do you want to play a game? yes/no",
       yes: "firstStep",
-      no: quit(),
+      no: quit,
     },
     end: {
       message: "Do you want to play again? yes/no",
       yes: "start",
-      no: quit(),
-      },
+      no: quit,
     },
     firstStep: {
       message: "Do you love me? yes/no",
       yes: "lovely",
-      no: quit(),
+      no: quit,
     },
     lovely: {
       message: "Great, how much? 1-10",
-      no: quit(),
+      no: quit,
     },
     // put more steps here
   };
@@ -79,5 +77,3 @@ export function startGame() {
   console.clear();
   logStep();
 }
-
-startGame();

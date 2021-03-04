@@ -5,9 +5,10 @@ import * as io from './input_output.js';
 function main(){
     console.log("Welcome to the imaginatively titled Project 9 Game" );
 
-    function mes () => {console.log("Does this work?")};
+    io.quit();
+    io.startGame();
 
-    io.startGame(mes, mes);
+    
 }
 
 main();
