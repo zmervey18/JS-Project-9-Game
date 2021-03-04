@@ -12,8 +12,8 @@ export let quit = () => {
 export function startGame() {
   const steps = {
     start: {
-      message: "Welcome to the imaginatively titled Project 9 Game \n" + "Do you want to play a game? yes/no",
-      yes: "firstStep",
+      message: "Welcome to the imaginatively titled Project 9 game! \n" + "Do you want to play a game? yes/no",
+      yes: "playerTurn",
       no: quit,
     },
     end: {
@@ -21,17 +21,65 @@ export function startGame() {
       yes: "start",
       no: quit,
     },
+    playerTurn: {
+      message: "Would you like to attack, defend or flee? yes/no",
+      yes: "monsterTurn",
+      no: "playerDefend",
+    },
+    playerDefend: {
+      message: "Would you like to defend? yes/no",
+      yes: "monsterTurn",
+      no: "playerFlee",
+    },
+    playerFlee: {
+      message: "Would you like to flee? yes/no",
+      yes: "monsterTurn",
+      no: "monsterTurn",
+    },
+
+    monsterTurn: {
+      message: "Monster's turn! \n" + "You're dead!",
+      yes: quit,
+      no: quit,
+    },
+
+    //Old stuff
     firstStep: {
       message: "Do you love me? yes/no",
       yes: "lovely",
-      no: quit,
+      no: () => {
+        console.log("Bye then!");
+        readline.close();
+      },
     },
     lovely: {
       message: "Great, how much? 1-10",
-      no: quit,
+      no: () => {
+        console.log("Bye then!");
+        readline.close();
+      },
     },
     // put more steps here
   };
+
+  /*
+  Outline of game:
+  - Intro message
+  - Print current player stats: health, etc
+  - Print current monster stats: health, etc
+  - Player chooses attack, defend or flee:
+  - Print updated player/monster stats
+      -If player health < 0,  quit
+  - Print monster attack, ....
+  - Print updated stats
+      -If player health < 0, quit
+  -Return to player chooses attack  
+  */
+
+
+
+
+  //Old code
 
   let currentStep = "start";
 
@@ -77,3 +125,5 @@ export function startGame() {
   console.clear();
   logStep();
 }
+
+startGame();
