@@ -100,10 +100,7 @@ export function startGame() {
   function monsterAction(){
     //Random action of monster
     playerOS.pickRandomChoice( playerProg );
-    //Check monsters health >= 0
-    if (playerProg.health <= 0){
-      quit();
-    }
+    
   }
 
   //What action is done depending on the step
@@ -130,6 +127,8 @@ export function startGame() {
       case "end":
         if (answer === "yes"){
           currentStep = "start";
+          playerProg.health = 100;
+          playerOS.health = 100;
         } else {
           quit();
         }
@@ -149,14 +148,13 @@ export function startGame() {
         console.log("default");
         quit();
     }
-
+    
     //Check monsters health >= 0
-    if(playerOS.health <= 0){
+    if(playerOS.health <= 0 || playerProg.health <= 0){
       currentStep = "end";
-      quit();
+    } else {
+      stats();
     }
-
-    stats();
     logStep();
   }
 

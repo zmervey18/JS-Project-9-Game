@@ -183,7 +183,7 @@ export class Monster extends Player {
 
         if(number <= 0.5){
             this.attack( otherPlayer );
-            otherPlayer.health -= 20;
+            otherPlayer.health -= 100;
         }
         else{
             this.defend();
