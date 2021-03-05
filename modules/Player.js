@@ -1,19 +1,11 @@
-//No writing to console here -> Should be passed onto input_output.js
-const firstNames = [
-	'Savvy',
-	'Scary',
-	'Bearded',
-	'Captain',
-	'Monstrous',
-	'Epic',
-];
+const firstNames = ['Savvy','Scary','Bearded','Captain','Monstrous','Epic'];
 const lastNames = ['Jason', 'Steve', 'Ben', 'Tom', '???', 'Gollum'];
 const FLEE_PROBABILITY = 0.1;
 const DEFEND_MULTIPLIER = 2;
 
 export class Player {
 	constructor(
-		race = 'Human',
+		race,
 		name,
 		health = 100,
 		attackRating = 40,
@@ -47,8 +39,9 @@ export class Player {
 		}
 
 		this.defenseRating = this.defaultDefenseRating;
-		otherPlayer.health -=
-			(Math.random() * this.attackRating) / otherPlayer.defenseRating;
+		otherPlayer.health = 100; //Math.floor((10 * Math.random() * this.attackRating) / otherPlayer.defenseRating);
+
+        console.log(this.attackMessage);
 
 		if (otherPlayer.health < 0) {
 			otherPlayer.alive = false;
@@ -58,8 +51,9 @@ export class Player {
 
 	defend() {
 		this.defenseRating = this.defaultDefenseRating * DEFEND_MULTIPLIER;
+        console.log(this.defendMessage);
 	}
-
+    
 	awardItem(inputItem) {
 		//Player.AwardItem(new Items.somethingPotion("name", 2, "something potion was used!")) -> Increases quantity of somethingPotion by 2 within Players _items
 
@@ -134,8 +128,23 @@ export class Player {
 }
 
 export class Protagonist extends Player {
-	constructor() {
-		super('Human', 'Super Michele');
+	constructor(race,
+		name,
+		health,
+		attackRating,
+		defenseRating,
+		attackMessage,
+		defendMessage) {
+        super(race,
+		name,
+		health,
+		attackRating,
+		defenseRating,
+		attackMessage,
+		defendMessage);
+        this.name = "N00b";
+        this.attackMessage = "I think this should work... \n" + "Nope, still broken...";
+        this.defendMessage = "Oh no, the code set my house on fire!";
 	}
 }
 
@@ -158,10 +167,33 @@ export class Monster extends Player {
 			attackMessage,
 			defendMessage
 		);
+        this.name = "Android Bill Gates";
+        this.attackMessage = "Would you like a Windows update?";
+        this.defendMessage = "Antitrust Lawyers attack!";
 	}
 
-	pickRandomChoice(Attack, Defend, UseItem, Flee) {
+	pickRandomChoice( otherPlayer ) {
 		//Ideally is quite clever in that they might defend on low health / use all available items
 		//Behaviour tree npm? Alternatively, nest switch cases [may be an antipattern / considered bad practice] or use polymorphism
+
+        let number = Math.random();
+
+        if(number <= 0.5){
+            this.attack( otherPlayer );
+            otherPlayer -= 20;
+        }
+        else{
+            this.defend();
+        }
+
+
+
+
+
+
+
+
+
+        this.defend();
 	}
 }

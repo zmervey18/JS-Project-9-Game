@@ -14,12 +14,10 @@ export let quit = () => {
 
 export function startGame() {
   //Create new instances of players
-  let playerProg = new Player.Protagonist();
-  let playerOS = new Player.Monster();
-  let playerProgEnemies = new Map();
-  playerProgEnemies.set(playerOS);
+  let playerProg = new Player.Protagonist("Player");
+  let playerOS = new Player.Monster("OS");
 
-  playerProg.JoinFight(playerProgEnemies, new Map());
+  playerProg.initFight(playerOS);
 
 
   const steps = {
@@ -64,10 +62,10 @@ export function startGame() {
   */
 
   //Replace with stats display
-  function stats(){
+  function stats() {
     //Replace with playerProg.displayStats() and playerOS.displayStats()
-    console.log("H4X0R stats:");
-    console.log("CLI stats:");
+    console.log(playerProg.parseMainStatsToString());
+    console.log(playerOS.parseMainStatsToString());
   } 
 
   function startAction(){
@@ -77,27 +75,32 @@ export function startGame() {
   //Players action
   function attackDefendOrFlee(input){
     if(input === "hack"){
-      console.log(playerProg.attackMessage);
+      // console.log(playerProg.attackMessage);
       //console.log("You have haxxed!");
-      playerProg.Attack(playerOS);
+      playerProg.attack(playerOS);
       //Do attack and change stats
     } else if(input === "debug"){
-      console.log("You have debugged!");
-      playerProg.Defend();
+      // console.log("You have debugged!");
+      playerProg.defend();
       //Defend and change stats
     } else if (input === "restart"){
-      console.log("You have restarted your computer! Pathetic.");
-      playerProg.Flee();
+      // console.log("You have attempted to restart your computer! Pathetic.");
+      playerProg.flee();
       //Flee and shange stats
     } else {
       //Repeat question
     }
+  
   }
   
   //Monsters action
   function monsterAction(){
     //Random action of monster
-    console.log("Command line has acted!");
+    playerOS.pickRandomChoice( playerProg );
+    //Check monsters health >= 0
+    if (playerProg.health <= 0){
+      quit();
+    }
   }
 
   //What action is done depending on the step
@@ -113,9 +116,17 @@ export function startGame() {
     let step;
 
     switch(currentStep){
-      case "start" || "end":
+      case "start":
         if (answer === "yes"){
           currentStep = "playerTurn";
+        } else {
+          quit();
+        }
+        break;
+        
+      case "end":
+        if (answer === "yes"){
+          currentStep = "start";
         } else {
           quit();
         }
@@ -136,6 +147,12 @@ export function startGame() {
         quit();
     }
 
+    //Check monsters health >= 0
+    if(playerOS.health <= 0){
+      currentStep = "end";
+      quit();
+    }
+
     stats();
     logStep();
   }
@@ -144,4 +161,3 @@ export function startGame() {
   console.clear();
   logStep();
 }
-  
