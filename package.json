@@ -1,5 +1,5 @@
 {
-  "type":"module",
+  "type": "module",
   "name": "miniproject",
   "version": "1.0.0",
   "description": "RPG video game",
@@ -16,6 +16,8 @@
   "bugs": {
     "url": "https://github.com/zmervey18/JS-Project-9-Game/issues"
   },
-  "homepage": "https://github.com/zmervey18/JS-Project-9-Game#readme"
+  "homepage": "https://github.com/zmervey18/JS-Project-9-Game#readme",
+  "dependencies": {
+    "chalk": "^4.1.0"
+  }
 }
-

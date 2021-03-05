@@ -1,3 +1,6 @@
+import chalk from "chalk";
+
+
 const firstNames = ['Savvy','Scary','Bearded','Captain','Monstrous','Epic'];
 const lastNames = ['Jason', 'Steve', 'Ben', 'Tom', '???', 'Gollum'];
 const FLEE_PROBABILITY = 0.1;
@@ -37,13 +40,12 @@ export class Player {
 				`Attack: ${otherPlayer.name} is not an enemy of ${this.name}`
 			);
 		}
-
 		this.defenseRating = this.defaultDefenseRating;
-		otherPlayer.health = 100; //Math.floor((10 * Math.random() * this.attackRating) / otherPlayer.defenseRating);
+		//otherPlayer.health = 100; //Math.floor((10 * Math.random() * this.attackRating) / otherPlayer.defenseRating);
 
         console.log(this.attackMessage);
 
-		if (otherPlayer.health < 0) {
+		if (otherPlayer.health <= 0) {
 			otherPlayer.alive = false;
 			otherPlayer.endFight();
 		}
@@ -168,8 +170,8 @@ export class Monster extends Player {
 			defendMessage
 		);
         this.name = "Android Bill Gates";
-        this.attackMessage = "Would you like a Windows update?";
-        this.defendMessage = "Antitrust Lawyers attack!";
+        this.attackMessage = "Would you like a Windows update? Have one anyway!";
+        this.defendMessage = "Android Bill Gates defends with antitrust lawyers!";
 	}
 
 	pickRandomChoice( otherPlayer ) {
@@ -177,23 +179,16 @@ export class Monster extends Player {
 		//Behaviour tree npm? Alternatively, nest switch cases [may be an antipattern / considered bad practice] or use polymorphism
 
         let number = Math.random();
+        console.log(number);
 
         if(number <= 0.5){
             this.attack( otherPlayer );
-            otherPlayer -= 20;
+            otherPlayer.health -= 20;
         }
         else{
             this.defend();
         }
 
 
-
-
-
-
-
-
-
-        this.defend();
 	}
 }

@@ -2,7 +2,7 @@
 //Item.Quantity
 
 
-class Item {
+export class Item {
 
     constructor(name = 'item name', quantity = 1, useItemMessage = 'item was used') {
         this.quantity = quantity;
@@ -79,12 +79,3 @@ class RevivePotion extends Item {
         
     }
 }
-
-export const Items = { //for intellisense (autocompletion) on all items -> Player.AwardItem(new Items.somethingPotion("name", 2, "something potion was used!"))
-    'HealthPotion': HealthPotion,
-    'PoisonPotion': PoisonPotion,
-    'IncreaseMaxHealthPotion': IncreaseMaxHealthPotion,
-    'DefensePotion':DefensePotion,
-    'AttackPotion':AttackPotion,
-    'RevivePotion':RevivePotion
-};
