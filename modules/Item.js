@@ -1,15 +1,13 @@
 //Item.PerformAction(player) -> Does the specific action for the specific item type + uses delete statement on item after
 //Item.Quantity
 
-//ItemTypes could be HealthPotion, PoisonPotion, IncreaseMaxHealthPotion, DefensePotion, AttackPotion, AOEpotion(affects multiple enemies), RevivePotion
-
 
 class Item {
 
-    constructor(quantity = 1) {
+    constructor(name = 'item name', quantity = 1, useItemMessage = 'item was used') {
         this.quantity = quantity;
-
-        //Until we think of more properties for this, why not.
+        this.name = name;
+        this.useItemMessage = useItemMessage;
     }
     
 }
@@ -18,7 +16,7 @@ class Item {
 
 class HealthPotion extends Item {
     constructor() {
-        super()
+        super();
     }
 
     /**
@@ -36,8 +34,7 @@ class PoisonPotion extends Item {
         super()
     }
     PerformAction(player) {
-        player.health -=20;
-        
+        player.health -= 20;
     }
 }
 
@@ -46,8 +43,7 @@ class IncreaseMaxHealthPotion extends Item {
         super()
     }
     PerformAction(player) {
-        player.health +=20;
-        
+        player.health += 20;
     }
 }
 
@@ -56,8 +52,7 @@ class DefensePotion extends Item {
         super()
     }
     PerformAction(player) {
-        player.defenseRating *=1.5;
-        
+        player.defenseRating *= 1.5;
     }
 }
 
@@ -66,8 +61,7 @@ class AttackPotion extends Item {
         super()
     }
     PerformAction(player) {
-        player.attackRating *=1.5;
-        
+        player.attackRating *= 1.5;
     }
 }
 
@@ -78,14 +72,15 @@ class RevivePotion extends Item {
     PerformAction(player) {
         //if (player.health==0){player.health+=100;}
 
-        if(Player.alive==false){
+        if (player.alive == false) {
+            player.alive = true
             player.health=100;
         }
         
     }
 }
 
-export const Items = { //for intellisense (autocompletion) on all items -> Player.AwardItem(new Items.somethingPotion(2))
+export const Items = { //for intellisense (autocompletion) on all items -> Player.AwardItem(new Items.somethingPotion("name", 2, "something potion was used!"))
     'HealthPotion': HealthPotion,
     'PoisonPotion': PoisonPotion,
     'IncreaseMaxHealthPotion': IncreaseMaxHealthPotion,
