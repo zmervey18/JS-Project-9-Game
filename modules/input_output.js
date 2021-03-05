@@ -1,6 +1,9 @@
 import { createInterface } from "readline";
-import * as Items from "./Item.js";
+import * as Item from "./Item.js";
 import * as Player from "./Player.js";
+import chalk from "chalk";
+
+
 
 const readline = createInterface({
   input: process.stdin,
@@ -8,21 +11,19 @@ const readline = createInterface({
 });
 
 export let quit = () => {
-  console.log("Nice try n00b, but you will never beat big tech!");
+  //console.log(chalk.green.bold("Nice try n00b, but you will never beat big tech!"));
   readline.close();
 }
 
 export function startGame() {
   //Create new instances of players
-  let playerProg = new Player.Protagonist();
-  let playerOS = new Player.Monster();
-  let playerProgEnemies = new Map();
-  playerProgEnemies.set(playerOS);
+  let playerProg = new Player.Protagonist("Player");
+  let playerOS = new Player.Monster("OS");
 
-  playerProg.JoinFight(playerProgEnemies, new Map());
+  playerProg.initFight(playerOS);
 
 
-  const steps = {
+  let steps = {
     start: {
       message: "Welcome to Coder vs. Command Line! \n" + "Are you a 31337 H4X0R? yes/no",
       yes: "playerTurn",
@@ -36,17 +37,22 @@ export function startGame() {
     },
 
     playerTurn: {
-      message: "H4X0R's turn \n" + "Would you like to hack, debug or restart? hack/debug/restart",
+      message: "Would you like to hack, debug, use an item or restart? hack/debug/items/restart",
       attack: "monsterTurn",
       defend: "monsterTurn",
       flee: "monsterTurn",
     },
 
     monsterTurn: {
-      message: "Command line's turn! Press any key",
+      message: "Command line's turn! Press enter to continue",
       yes: "playerTurn",
       no: "playerTurn",
     },
+
+    useItem: {
+      message: "Which item would you like to use?",
+      
+    }
   };
 
   /*
@@ -64,40 +70,49 @@ export function startGame() {
   */
 
   //Replace with stats display
-  function stats(){
+  function stats() {
     //Replace with playerProg.displayStats() and playerOS.displayStats()
-    console.log("H4X0R stats:");
-    console.log("CLI stats:");
+    console.log(chalk.blue.bold(playerProg.parseMainStatsToString()));
+    console.log(chalk.yellow.bold(playerOS.parseMainStatsToString()));
   } 
 
   function startAction(){
-    console.log("Time to hax! Your turn!");
+    console.log(chalk.green.bold("Time to hax! Your turn!"));
   }
 
   //Players action
   function attackDefendOrFlee(input){
     if(input === "hack"){
-      console.log(playerProg.attackMessage);
-      //console.log("You have haxxed!");
-      playerProg.Attack(playerOS);
+      playerProg.attack(playerOS);
       //Do attack and change stats
     } else if(input === "debug"){
-      console.log("You have debugged!");
-      playerProg.Defend();
+      playerProg.defend();
       //Defend and change stats
     } else if (input === "restart"){
-      console.log("You have restarted your computer! Pathetic.");
-      playerProg.Flee();
+      playerProg.flee();
       //Flee and shange stats
+    } else if (input === "items") {
+      console.log(playerProg.parseItemsToString())
+      //steps[useItem]
+      for (let [itemClassName, item] of playerProg._items) {
+        steps['useItem'][item.name] = "monsterTurn";
+      }
+      return "useItem";
     } else {
       //Repeat question
     }
+    return "monsterTurn"; //Always returns "monsterTurn" unless input was "items" -> will instead return "useItem"
+  }
+
+  function useTheItem(input) {
+    playerProg.useItem('Item'); //we cheated
   }
   
   //Monsters action
   function monsterAction(){
     //Random action of monster
-    console.log("Command line has acted!");
+    playerOS.pickRandomChoice( playerProg );
+    
   }
 
   //What action is done depending on the step
@@ -113,17 +128,31 @@ export function startGame() {
     let step;
 
     switch(currentStep){
-      case "start" || "end":
+      case "start":
         if (answer === "yes"){
+          startAction();
           currentStep = "playerTurn";
+        } else {
+          quit();
+        }
+        break;
+        
+      case "end":
+        if (answer === "yes"){
+          currentStep = "start";
+          /* playerProg.health = 100;
+          playerOS.health = 100; */
+          playerProg = new Player.Protagonist("Player");
+          playerOS = new Player.Monster("OS");
+          playerProg.initFight(playerOS);
         } else {
           quit();
         }
         break;
       
       case "playerTurn":
-        attackDefendOrFlee(answer);
-        currentStep = "monsterTurn";
+        const nextStep = attackDefendOrFlee(answer);
+        currentStep = nextStep; //"monsterTurn";
         break;
 
       case "monsterTurn":
@@ -131,12 +160,30 @@ export function startGame() {
         currentStep = "playerTurn";
         break;
 
+      case "useItem":
+        useTheItem(answer);
+        currentStep = "monsterTurn";
+        break;
+    
+
       default:
-        console.log("default");
+        console.log(chalk.green.bold("default"));
         quit();
     }
+    
+    //Award the player an item every turn
+    playerProg.awardItem(new Item.HealthPotion());
 
-    stats();
+    //Check monsters health >= 0
+    if(playerOS.health <= 0){
+      console.log( chalk.magentaBright.bold( "Oh no, tech is dead!") );
+      currentStep = "end";
+    } else if(playerProg.health <= 0 ){
+      console.log( chalk.magentaBright.bold( "Nice try n00b, but you will never beat big tech!") );
+      currentStep = "end";
+    } else {
+      stats();
+    }
     logStep();
   }
 
@@ -144,4 +191,3 @@ export function startGame() {
   console.clear();
   logStep();
 }
-  

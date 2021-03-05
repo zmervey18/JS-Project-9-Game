@@ -3,7 +3,7 @@
 {
   "Human":[
     {"name": "Captain Samy ", "health" : 100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : "It is definitely going to break", "defendMessage": "Don't break me this time"},
-    {"name":"Todd Howard", "health" : 90, "attackRating" : 30, "defenseRating" : 40, "attackMessage" : "Climbing was a mistake. So I will attack" , "defendMessage" :"Great games are played, not made"},
+    {"name": "Todd Howard", "health" : 90, "attackRating" : 30, "defenseRating" : 40, "attackMessage" : "Climbing was a mistake. So I will attack" , "defendMessage" :"Great games are played, not made"},
     {"health" : 140, "attackRating" : 40, "defenseRating" : 20, "attackMessage" :"Ha, ha, ha... Ha, ha, ha! Ha! Ha!" , "defendMessage":"Shut up! You're supposed to be dead!"}
   ],
   "Windows96":[
@@ -12,7 +12,7 @@
     {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" : "Take that!" , "defendMessage" :"Can't you see how pathetic your attacks are!"}
   ],
   "WindowsVista":[
-    {"name": "Android Bill Gates", "health" : 1e+100, "attackRating" : 1e+100, "defenseRating" : 1e+100, "attackMessage" : "Nice program, shame if it would crash...", "defendMessage" : "Let's sloooooow thiiiisss doooowwwnnnn......"},
+    {"name": "Cyborg Bill Gates", "health" : 1e+100, "attackRating" : 1e+100, "defenseRating" : 1e+100, "attackMessage" : "Nice program, shame if it would crash...", "defendMessage" : "Let's sloooooow thiiiisss doooowwwnnnn......"},
     {"health" : 1100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : "Man enough to fight with me, but not man enough to defeat me!" , "defendMessage" :"Talk about being disrespectful"},
     {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" :"Learn from your defeat, child." , "defendMessage" :"Hope you're listening. Level up homie"}
   ],
