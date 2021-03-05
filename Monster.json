@@ -2,29 +2,29 @@
 
 {
   "Human":[
-    {"name": "Captain Samy ", "health" : 100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : "It is definitiely going to break", "defendMessage": "Don't break me this time"},
+    {"name": "Captain Samy ", "health" : 100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : "It is definitely going to break", "defendMessage": "Don't break me this time"},
     {"name":"Todd Howard", "health" : 90, "attackRating" : 30, "defenseRating" : 40, "attackMessage" : "Climbing was a mistake. So I will attack" , "defendMessage" :"Great games are played, not made"},
-    {"health" : 140, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : , "defendMessage" :}
+    {"health" : 140, "attackRating" : 40, "defenseRating" : 20, "attackMessage" :"Ha, ha, ha... Ha, ha, ha! Ha! Ha!" , "defendMessage":"Shut up! You're supposed to be dead!"}
   ],
   "Windows96":[
-    {"name": "Android Bill Gates", "health" : 1e+100, "attackRating" : 1e+100, "defenseRating" : 1e+100, "attackMessage" : "Would you like a Windows update?", "defendMessage" : "Antitrust Lawyers"},
-    {"health" : 1100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : , "defendMessage" :},
-    {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" : , "defendMessage" :}
+    {"name": "Android Bill Gates", "health" : 1e+100, "attackRating" : 1e+100, "defenseRating" : 1e+100, "attackMessage" : "Would you like a Windows update?", "defendMessage" : "Antitrust Lawyersattack!"},
+    {"health" : 1100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" :"In my ideal nation, there would exist no one as weak as you!" , "defendMessage" :"Honestly, what a joke!"},
+    {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" : "Take that!" , "defendMessage" :"Can't you see how pathetic your attacks are!"}
   ],
   "WindowsVista":[
     {"name": "Android Bill Gates", "health" : 1e+100, "attackRating" : 1e+100, "defenseRating" : 1e+100, "attackMessage" : "Nice program, shame if it would crash...", "defendMessage" : "Let's sloooooow thiiiisss doooowwwnnnn......"},
-    {"health" : 1100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : , "defendMessage" :},
-    {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" : , "defendMessage" :}
+    {"health" : 1100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : "Man enough to fight with me, but not man enough to defeat me!" , "defendMessage" :"Talk about being disrespectful"},
+    {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" :"Learn from your defeat, child." , "defendMessage" :"Hope you're listening. Level up homie"}
   ],
   "MacOS":[
     {"name": "Steve Apples", "health" : 1e+90, "attackRating" : 1e+90, "defenseRating" : 1e+90, "attackMessage" : "That will cost you $900 before tax.", "defendMessage" : "We have privacy concerns..."},
-    {"health" : 1100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : , "defendMessage" :},
-    {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" : , "defendMessage" :}
+    {"health" : 1100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : "I haven't begun to use my full power.", "defendMessage" :" Give it another go!"},
+    {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" : "Next time, I suggest you try fighting back.", "defendMessage" :"No matter how much you try, you still won't beat me"}
   ],
   "Ubuntu":[
     {"name": "Linus", "health" : 10000, "attackRating" : 900, "defenseRating" : 800, "attackMessage" : "Command line attacks with random BS!", "defendMessage" : "We're not unpopular, we're niche."},
-    {"health" : 1100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : , "defendMessage" :},
-    {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" : , "defendMessage" :}
+    {"health" : 1100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" :"I can't kill you enough times...!" , "defendMessage" :"Did you believe your pitiful powers could defeat me?"},
+    {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" :"Tsk tsk tsk, rank amateur" , "defendMessage" :"Weak! You're going to have to do better than that."}
   ]
 
 

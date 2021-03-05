@@ -3,7 +3,6 @@
 
 //ItemTypes could be HealthPotion, PoisonPotion, IncreaseMaxHealthPotion, DefensePotion, AttackPotion, AOEpotion(affects multiple enemies), RevivePotion
 
-import * as Player from './Player.js';
 
 class Item {
 
