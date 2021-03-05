@@ -3,6 +3,7 @@
 
 //ItemTypes could be HealthPotion, PoisonPotion, IncreaseMaxHealthPotion, DefensePotion, AttackPotion, AOEpotion(affects multiple enemies), RevivePotion
 
+
 class Item {
 
     constructor(quantity = 1) {
@@ -70,10 +71,25 @@ class AttackPotion extends Item {
     }
 }
 
+class RevivePotion extends Item {
+    constructor() {
+        super()
+    }
+    PerformAction(player) {
+        //if (player.health==0){player.health+=100;}
+
+        if(Player.alive==false){
+            player.health=100;
+        }
+        
+    }
+}
+
 export const Items = { //for intellisense (autocompletion) on all items -> Player.AwardItem(new Items.somethingPotion(2))
     'HealthPotion': HealthPotion,
     'PoisonPotion': PoisonPotion,
     'IncreaseMaxHealthPotion': IncreaseMaxHealthPotion,
     'DefensePotion':DefensePotion,
-    'AttackPotion':AttackPotion
+    'AttackPotion':AttackPotion,
+    'RevivePotion':RevivePotion
 };
