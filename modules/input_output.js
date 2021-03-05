@@ -1,5 +1,5 @@
 import { createInterface } from "readline";
-import * as Items from "./Item.js";
+import * as Item from "./Item.js";
 import * as Player from "./Player.js";
 import chalk from "chalk";
 
@@ -11,7 +11,7 @@ const readline = createInterface({
 });
 
 export let quit = () => {
-  console.log("Nice try n00b, but you will never beat big tech!");
+  //console.log(chalk.green.bold("Nice try n00b, but you will never beat big tech!"));
   readline.close();
 }
 
@@ -23,7 +23,7 @@ export function startGame() {
   playerProg.initFight(playerOS);
 
 
-  const steps = {
+  let steps = {
     start: {
       message: "Welcome to Coder vs. Command Line! \n" + "Are you a 31337 H4X0R? yes/no",
       yes: "playerTurn",
@@ -37,17 +37,22 @@ export function startGame() {
     },
 
     playerTurn: {
-      message: "H4X0R's turn \n" + "Would you like to hack, debug or restart? hack/debug/restart",
+      message: "Would you like to hack, debug, use an item or restart? hack/debug/items/restart",
       attack: "monsterTurn",
       defend: "monsterTurn",
       flee: "monsterTurn",
     },
 
     monsterTurn: {
-      message: "Command line's turn! Press any key",
+      message: "Command line's turn! Press enter to continue",
       yes: "playerTurn",
       no: "playerTurn",
     },
+
+    useItem: {
+      message: "Which item would you like to use?",
+      
+    }
   };
 
   /*
@@ -67,12 +72,12 @@ export function startGame() {
   //Replace with stats display
   function stats() {
     //Replace with playerProg.displayStats() and playerOS.displayStats()
-    console.log(playerProg.parseMainStatsToString());
-    console.log(playerOS.parseMainStatsToString());
+    console.log(chalk.blue.bold(playerProg.parseMainStatsToString()));
+    console.log(chalk.yellow.bold(playerOS.parseMainStatsToString()));
   } 
 
   function startAction(){
-    console.log("Time to hax! Your turn!");
+    console.log(chalk.green.bold("Time to hax! Your turn!"));
   }
 
   //Players action
@@ -90,10 +95,21 @@ export function startGame() {
       // console.log("You have attempted to restart your computer! Pathetic.");
       playerProg.flee();
       //Flee and shange stats
+    }else if (input === "items") {
+      console.log(playerProg.parseItemsToString())
+      //steps[useItem]
+      for (let [itemClassName, item] of playerProg._items) {
+        steps['useItem'][item.name] = "monsterTurn";
+      }
+      return "useItem";
     } else {
       //Repeat question
     }
-  
+    return "monsterTurn";
+  }
+
+  function useTheItem(input) {
+    playerProg.useItem(input.className);
   }
   
   //Monsters action
@@ -118,6 +134,7 @@ export function startGame() {
     switch(currentStep){
       case "start":
         if (answer === "yes"){
+          startAction();
           currentStep = "playerTurn";
         } else {
           quit();
@@ -127,15 +144,18 @@ export function startGame() {
       case "end":
         if (answer === "yes"){
           currentStep = "start";
-          playerProg.health = 100;
-          playerOS.health = 100;
+          /* playerProg.health = 100;
+          playerOS.health = 100; */
+          playerProg = new Player.Protagonist("Player");
+          playerOS = new Player.Monster("OS");
+          playerProg.initFight(playerOS);
         } else {
           quit();
         }
         break;
       
       case "playerTurn":
-        attackDefendOrFlee(answer);
+        const nextStep = attackDefendOrFlee(answer);
         currentStep = "monsterTurn";
         break;
 
@@ -144,13 +164,26 @@ export function startGame() {
         currentStep = "playerTurn";
         break;
 
+      case "useItem":
+        useTheItem(answer);
+        currentStep = "monsterTurn";
+        break;
+    
+
       default:
-        console.log("default");
+        console.log(chalk.green.bold("default"));
         quit();
     }
     
+    //Award the player an item every turn
+    playerProg.awardItem(new Item.HealthPotion());
+
     //Check monsters health >= 0
-    if(playerOS.health <= 0 || playerProg.health <= 0){
+    if(playerOS.health <= 0){
+      console.log( chalk.magentaBright.bold( "Oh no, tech is dead!") );
+      currentStep = "end";
+    } else if(playerProg.health <= 0 ){
+      console.log( chalk.magentaBright.bold( "Nice try n00b, but you will never beat big tech!") );
       currentStep = "end";
     } else {
       stats();

@@ -4,7 +4,7 @@
 
 export class Item {
 
-    constructor(name = 'item name', quantity = 1, useItemMessage = 'item was used') {
+    constructor(name = 'soda', quantity = 1, useItemMessage = 'soda was used') {
         this.quantity = quantity;
         this.name = name;
         this.useItemMessage = useItemMessage;
@@ -14,7 +14,7 @@ export class Item {
 
 //Polymorphism seemed better here vs. doing switch statement
 
-class HealthPotion extends Item {
+export class HealthPotion extends Item {
     constructor() {
         super();
     }
@@ -29,7 +29,7 @@ class HealthPotion extends Item {
     
 }
 
-class PoisonPotion extends Item {
+export class PoisonPotion extends Item {
     constructor() {
         super()
     }
@@ -38,7 +38,7 @@ class PoisonPotion extends Item {
     }
 }
 
-class IncreaseMaxHealthPotion extends Item {
+export class IncreaseMaxHealthPotion extends Item {
     constructor() {
         super()
     }
@@ -47,7 +47,7 @@ class IncreaseMaxHealthPotion extends Item {
     }
 }
 
-class DefensePotion extends Item {
+export class DefensePotion extends Item {
     constructor() {
         super()
     }
@@ -56,7 +56,7 @@ class DefensePotion extends Item {
     }
 }
 
-class AttackPotion extends Item {
+export class AttackPotion extends Item {
     constructor() {
         super()
     }
@@ -65,7 +65,7 @@ class AttackPotion extends Item {
     }
 }
 
-class RevivePotion extends Item {
+export class RevivePotion extends Item {
     constructor() {
         super()
     }

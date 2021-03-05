@@ -43,7 +43,7 @@ export class Player {
 		this.defenseRating = this.defaultDefenseRating;
 		//otherPlayer.health = 100; //Math.floor((10 * Math.random() * this.attackRating) / otherPlayer.defenseRating);
 
-        console.log(this.attackMessage);
+        console.log(chalk.red.bold(this.attackMessage));
 
 		if (otherPlayer.health <= 0) {
 			otherPlayer.alive = false;
@@ -53,35 +53,41 @@ export class Player {
 
 	defend() {
 		this.defenseRating = this.defaultDefenseRating * DEFEND_MULTIPLIER;
-        console.log(this.defendMessage);
+        console.log(chalk.redBright.bold(this.defendMessage));
 	}
     
 	awardItem(inputItem) {
 		//Player.AwardItem(new Items.somethingPotion("name", 2, "something potion was used!")) -> Increases quantity of somethingPotion by 2 within Players _items
 
-		if (Player._items.has(inputItem.className)) {
-			Player._items.get(item.className).quantity += inputItem.quantity;
+		if (this._items.has(inputItem.className)) {
+			this._items.get(inputItem.className).quantity += inputItem.quantity;
 		} else {
-			Player._items.set(item.className, inputItem);
+			this._items.set(inputItem.className, inputItem);
 		}
 	}
 
 	useItem(itemClassName, otherPlayer = this) {
 		//Player.UseItem('PoisonPotion', EnemyPlayer) -> Attacks EnemyPlayer with PoisonPotion if Player has it
 		//if exists execute perform actions, Poison Poiton ()
-		if (Player._items.has(itemClassname)) {
-			Player._items.get(itemClassname).PerformAction(otherPlayer);
-			Player._items.get(item.className).quantity -= 1;
-			if (Player._items.get(item.className).quantity < 1) {
-				Player._items.delete(item.className);
-			}
-		}
+		if (this._items.has(itemClassname)) {
+			this._items.get(itemClassname).PerformAction(otherPlayer);
+			this._items.get(item.className).quantity -= 1;
+			if (this._items.get(item.className).quantity < 1) {
+				this._items.delete(item.className);
+            }
+		} else {
+            console.log("You have no such item!");
+        }
 	}
 
 	flee() {
 		if (Math.random() < FLEE_PROBABILITY) {
-			this.endFight();
+			//this.endFight();
 		}
+
+        console.log( chalk.magenta( "Player tactically runs away from coding problems by restarting their computer!" ) );
+        console.log( chalk.red( "Windows update will not let user shut down! Back to the terminal!" ) );
+
 	}
 
 	endFight() {
@@ -122,7 +128,7 @@ export class Player {
 
 	parseItemsToString() {
 		let stringArray = [];
-		for (let [item, _] of this._items) {
+		for (let [itemClassName, item] of this._items) {
 			stringArray.push(`${item.name}: ${item.quantity}`);
 		}
 		return stringArray.join(', ');
@@ -179,14 +185,14 @@ export class Monster extends Player {
 		//Behaviour tree npm? Alternatively, nest switch cases [may be an antipattern / considered bad practice] or use polymorphism
 
         let number = Math.random();
-        console.log(number);
-
-        if(number <= 0.5){
+        if(number <= 0.9){
             this.attack( otherPlayer );
-            otherPlayer.health -= 100;
+            otherPlayer.health -= 25;
+            this.attackRating += 50;
         }
         else{
             this.defend();
+            this.defenseRating += 50;
         }
 
 
