@@ -1,37 +1,42 @@
 import { createInterface } from "readline";
+import * as Items from "./Item.js";
+import * as Player from "./Player.js";
+
 const readline = createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
 export let quit = () => {
-  console.log("Bye then!");
+  console.log("Nice try n00b, but you will never beat big tech!");
   readline.close();
 }
 
 export function startGame() {
+
+
   const steps = {
     start: {
-      message: "Welcome to the imaginatively titled Project 9 game! \n" + "Do you want to play a game? yes/no",
+      message: "Welcome to Coder vs. Command Line! \n" + "Are you a 31337 H4X0R? yes/no",
       yes: "playerTurn",
       no: quit,
     },
 
     end: {
-      message: "Do you want to play again? yes/no",
+      message: "Do you still think you're leet? yes/no",
       yes: "start",
       no: quit,
     },
 
     playerTurn: {
-      message: "Would you like to attack, defend or flee? attack/defend/flee",
+      message: "H4X0R's turn \n" + "Would you like to hack, debug or restart? hack/debug/restart",
       attack: "monsterTurn",
       defend: "monsterTurn",
       flee: "monsterTurn",
     },
 
     monsterTurn: {
-      message: "Monster's turn! Press any key",
+      message: "Command line's turn! Press any key",
       yes: "playerTurn",
       no: "playerTurn",
     },
@@ -53,24 +58,24 @@ export function startGame() {
 
   //Replace with stats display
   function stats(){
-    console.log("Player stats:");
-    console.log("Monster stats:");
+    console.log("H4X0R stats:");
+    console.log("CLI stats:");
   } 
 
   function startAction(){
-    console.log("Let's play! Your turn!");
+    console.log("Time to hax! Your turn!");
   }
 
   //Players action
   function attackDefendOrFlee(input){
-    if(input === "attack"){
-      console.log("You have attacked!");
+    if(input === "hack"){
+      console.log("You have haxxed!");
       //Do attack and change stats
-    } else if(input === "defend"){
-      console.log("You have defended!");
+    } else if(input === "debug"){
+      console.log("You have debugged!");
       //Defend and change stats
-    } else if (input === "flee"){
-      console.log("You have fled!");
+    } else if (input === "restart"){
+      console.log("You have restarted! Pathetic.");
       //Flee and shange stats
     } else {
       //Repeat question
@@ -80,7 +85,7 @@ export function startGame() {
   //Monsters action
   function monsterAction(){
     //Random action of monster
-    console.log("Monster action!");
+    console.log("Command line has acted!");
   }
 
   //What action is done depending on the step

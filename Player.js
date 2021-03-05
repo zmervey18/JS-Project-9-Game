@@ -1,23 +1,23 @@
-//Potentially put below data into a JSON in future
+//No writing to console here -> Should be passed onto input_output.js
 const firstNames = ['Savvy', 'Scary', 'Bearded', 'Captain', 'Monstrous', 'Epic'];
-const lastNames = ['Jason', 'Steve', 'Ben', 'Tom', '???', 'Gollum']
+const lastNames = ['Jason', 'Steve', 'Ben', 'Tom', '???', 'Gollum'];
 const fleeProbability = 0.1;
 const defendMultiplier = 2;
-//
 
 export class Player {
-    
 
-    constructor(health = 100, attackRating = 40, defenseRating = 20) {
+    constructor(race = 'Human', name, health = 100, attackRating = 40, defenseRating = 20, attackMessage = '', defendMessage = '') {
         this.health = health;
         this.attackRating = attackRating;
         this.defenseRating = defenseRating; //Ensure non-zero
-        this.name = firstNames[Math.floor(Math.random() * firstNames.length)] + " " + lastNames[Math.floor(Math.random() * lastNames.length)]; //rand name
+        this.name = name || firstNames[Math.floor(Math.random() * firstNames.length)] + " " + lastNames[Math.floor(Math.random() * lastNames.length)]; //rand name
         this.alive = true;
         this._enemies = new Map(); //Hash of other enemy Players + Map() performs better in scenarios involving frequent additions and removals of key-value pairs
         this._allies = new Map(); //Hash of other ally Players
         this._items = new Map(); //Hash of items
         this.defaultDefenseRating = this.defenseRating;
+        this.attackMessage = attackMessage;
+        this.defendMessage = defendMessage;
     }
 
     Attack(otherPlayer) {
@@ -70,24 +70,27 @@ export class Player {
 
     EndFight() {
         //Leave fight by removing from other players ally and enemy hashes
-        for ([key, value] of this._enemies) {
-            enemy._enemies.delete
+        for ([enemy, _] of this._enemies) {
+            enemy._enemies.delete(this)
+        }
+        for ([ally, _] of this._allies) {
+            ally._allies.delete(this)
         }
         
-
         //Clear your ally and enemy hashes
         this._enemies = new Map(); //Will the garbage collector remove the old hashes in JS by doing this? i.e. Clear from memory
         this._allies = new Map();
     }
 
-    InitFight(allyArray, enemyHash) {
+    JoinFight(allyHash, enemyHash) {
         //Join fight by adding to other players ally and enemy hashes
+        
 
         //Set up your own ally and enemy hashes
 
     }
 
-    ParseAttributes() {
+    ParseAttributesToString() {
 
     }
 }

@@ -1,0 +1,32 @@
+
+
+{
+  "Human":[
+    {"name": "Captain Samy ", "health" : 100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : "It is definitiely going to break", "defendMessage": "Don't break me this time"},
+    {"name":"Todd Howard", "health" : 90, "attackRating" : 30, "defenseRating" : 40, "attackMessage" : "Climbing was a mistake. So I will attack" , "defendMessage" :"Great games are played, not made"},
+    {"health" : 140, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : , "defendMessage" :}
+  ],
+  "Windows96":[
+    {"name": "Android Bill Gates", "health" : 1e+100, "attackRating" : 1e+100, "defenseRating" : 1e+100, "attackMessage" : "Would you like a Windows update?", "defendMessage" : "Antitrust Lawyers"},
+    {"health" : 1100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : , "defendMessage" :},
+    {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" : , "defendMessage" :}
+  ],
+  "WindowsVista":[
+    {"name": "Android Bill Gates", "health" : 1e+100, "attackRating" : 1e+100, "defenseRating" : 1e+100, "attackMessage" : "Nice program, shame if it would crash...", "defendMessage" : "Let's sloooooow thiiiisss doooowwwnnnn......"},
+    {"health" : 1100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : , "defendMessage" :},
+    {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" : , "defendMessage" :}
+  ],
+  "MacOS":[
+    {"name": "Steve Apples", "health" : 1e+90, "attackRating" : 1e+90, "defenseRating" : 1e+90, "attackMessage" : "That will cost you $900 before tax.", "defendMessage" : "We have privacy concerns..."},
+    {"health" : 1100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : , "defendMessage" :},
+    {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" : , "defendMessage" :}
+  ],
+  "Ubuntu":[
+    {"name": "Linus", "health" : 10000, "attackRating" : 900, "defenseRating" : 800, "attackMessage" : "Command line attacks with random BS!", "defendMessage" : "We're not unpopular, we're niche."},
+    {"health" : 1100, "attackRating" : 40, "defenseRating" : 20, "attackMessage" : , "defendMessage" :},
+    {"health" : 60, "attackRating" : 50, "defenseRating" : 10, "attackMessage" : , "defendMessage" :}
+  ]
+
+
+}
+
