@@ -83,19 +83,15 @@ export function startGame() {
   //Players action
   function attackDefendOrFlee(input){
     if(input === "hack"){
-      // console.log(playerProg.attackMessage);
-      //console.log("You have haxxed!");
       playerProg.attack(playerOS);
       //Do attack and change stats
     } else if(input === "debug"){
-      // console.log("You have debugged!");
       playerProg.defend();
       //Defend and change stats
     } else if (input === "restart"){
-      // console.log("You have attempted to restart your computer! Pathetic.");
       playerProg.flee();
       //Flee and shange stats
-    }else if (input === "items") {
+    } else if (input === "items") {
       console.log(playerProg.parseItemsToString())
       //steps[useItem]
       for (let [itemClassName, item] of playerProg._items) {
@@ -105,11 +101,11 @@ export function startGame() {
     } else {
       //Repeat question
     }
-    return "monsterTurn";
+    return "monsterTurn"; //Always returns "monsterTurn" unless input was "items" -> will instead return "useItem"
   }
 
   function useTheItem(input) {
-    playerProg.useItem(input.className);
+    playerProg.useItem('Item'); //we cheated
   }
   
   //Monsters action
@@ -156,7 +152,7 @@ export function startGame() {
       
       case "playerTurn":
         const nextStep = attackDefendOrFlee(answer);
-        currentStep = "monsterTurn";
+        currentStep = nextStep; //"monsterTurn";
         break;
 
       case "monsterTurn":

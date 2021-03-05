@@ -69,11 +69,11 @@ export class Player {
 	useItem(itemClassName, otherPlayer = this) {
 		//Player.UseItem('PoisonPotion', EnemyPlayer) -> Attacks EnemyPlayer with PoisonPotion if Player has it
 		//if exists execute perform actions, Poison Poiton ()
-		if (this._items.has(itemClassname)) {
-			this._items.get(itemClassname).PerformAction(otherPlayer);
-			this._items.get(item.className).quantity -= 1;
-			if (this._items.get(item.className).quantity < 1) {
-				this._items.delete(item.className);
+		if (this._items.has(itemClassName)) {
+			this._items.get(itemClassName).PerformAction(otherPlayer);
+            this._items.get(itemClassName).quantity -= 1;
+            if (this._items.get(itemClassName).quantity < 1) {
+                this._items.delete(itemClassName);
             }
 		} else {
             console.log("You have no such item!");
