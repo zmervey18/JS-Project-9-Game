@@ -1,49 +1,93 @@
-import chalk from "chalk";
+import chalk from 'chalk';
 
-
-const firstNames = ['Savvy','Scary','Bearded','Captain','Monstrous','Epic'];
-const lastNames = ['Jason', 'Steve', 'Ben', 'Tom', '???', 'Gollum'];
+const firstNames = [
+	'Savvy',
+	'Scary',
+	'Bearded',
+	'Captain',
+	'Monstrous',
+	'Epic',
+];
+const lastNames = [
+	'Jason',
+	'Steve',
+	'Ben',
+	'Tom',
+	'???',
+	'Gollum',
+	'Person',
+	'Being',
+];
 const FLEE_PROBABILITY = 0.1;
-const DEFEND_MULTIPLIER = 2;
+const DEFEND_MULTIPLIER = 3;
 
 export class Player {
-	constructor(
-		race,
-		name,
-		health = 100,
-		attackRating = 40,
-		defenseRating = 20,
-		attackMessage = 'attack message',
-		defendMessage = 'defend message'
-	) {
-		this.health = health;
-		this.attackRating = attackRating;
-		this.defenseRating = defenseRating; //Ensure non-zero
-		this.name =
-			name ||
-			firstNames[Math.floor(Math.random() * firstNames.length)] +
-				' ' +
-				lastNames[Math.floor(Math.random() * lastNames.length)]; //rand name
+	//Constructor parameters in builder pattern format https://dzone.com/articles/builder-pattern-in-javascript
+	/**@param {String} race*/
+	__race(race) {
 		this.race = race;
+		return this;
+	}
+	/**@param {String} name*/
+	__name(name) {
+		this.name = name ? name : this.name;
+		return this;
+	}
+	/**@param {Number} health*/
+	__health(health) {
+		this.health = health;
+		return this;
+	}
+	/**@param {Number} attackRating*/
+	__attackRating(attackRating) {
+		this.attackRating = attackRating;
+		return this;
+	}
+	/**@param {Number} defenseRating*/
+	__defenseRating(defenseRating) {
+		this.defenseRating = defenseRating;
+		return this;
+	}
+	/**@param {String} attackMessage*/
+	__attackMessage(attackMessage) {
+		this.attackMessage = attackMessage;
+		return this;
+	}
+	/**@param {String} defendMessage*/
+	__defendMessage(defendMessage) {
+		this.defendMessage = defendMessage;
+		return this;
+	}
+	//
+	constructor() {
+		this.race = '';
+		this.name = `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${
+			lastNames[Math.floor(Math.random() * lastNames.length)]
+		}`; //rand name
+		this.health = 100;
+		this.attackRating = 40;
+		this.defenseRating = 20; //Ensure non-zero
 		this.alive = true;
 		this._enemies = new Map(); //Hash of other enemy Players + Map() performs better in scenarios involving frequent additions and removals of key-value pairs
 		this._allies = new Map(); //Hash of other ally Players
 		this._items = new Map(); //Hash of items
-		this.defaultDefenseRating = this.defenseRating;
-		this.attackMessage = attackMessage;
-		this.defendMessage = defendMessage;
+		this._defaultDefenseRating = this.defenseRating;
+		this.attackMessage = 'attack message';
+		this.defendMessage = 'defend message';
 	}
 
 	attack(otherPlayer) {
 		if (!this._enemies.has(otherPlayer)) {
 			throw new Error(
-				`Attack: ${otherPlayer.name} is not an enemy of ${this.name}`
+				`attack: ${otherPlayer.name} is not an enemy of ${this.name}`
 			);
 		}
-		this.defenseRating = this.defaultDefenseRating;
-		//otherPlayer.health = 100; //Math.floor((10 * Math.random() * this.attackRating) / otherPlayer.defenseRating);
+		this.defenseRating = this._defaultDefenseRating;
+		otherPlayer.health -= Math.floor(
+			(10 * Math.random() * this.attackRating) / otherPlayer.defenseRating
+		);
 
-        console.log(chalk.red.bold(this.attackMessage));
+		console.log(chalk.red.bold(this.attackMessage));
 
 		if (otherPlayer.health <= 0) {
 			otherPlayer.alive = false;
@@ -52,32 +96,33 @@ export class Player {
 	}
 
 	defend() {
-		this.defenseRating = this.defaultDefenseRating * DEFEND_MULTIPLIER;
-        console.log(chalk.redBright.bold(this.defendMessage));
+		this.defenseRating = this._defaultDefenseRating * DEFEND_MULTIPLIER;
+		console.log(chalk.redBright.bold(this.defendMessage));
 	}
-    
+
 	awardItem(inputItem) {
 		//Player.AwardItem(new Items.somethingPotion("name", 2, "something potion was used!")) -> Increases quantity of somethingPotion by 2 within Players _items
 
-		if (this._items.has(inputItem.className)) {
-			this._items.get(inputItem.className).quantity += inputItem.quantity;
+		if (this._items.has(inputItem.constructor.name)) {
+			this._items.get(inputItem.constructor.name).quantity +=
+				inputItem.quantity;
 		} else {
-			this._items.set(inputItem.className, inputItem);
+			this._items.set(inputItem.constructor.name, inputItem);
 		}
 	}
 
 	useItem(itemClassName, otherPlayer = this) {
 		//Player.UseItem('PoisonPotion', EnemyPlayer) -> Attacks EnemyPlayer with PoisonPotion if Player has it
-		//if exists execute perform actions, Poison Poiton ()
+
 		if (this._items.has(itemClassName)) {
 			this._items.get(itemClassName).PerformAction(otherPlayer);
-            this._items.get(itemClassName).quantity -= 1;
-            if (this._items.get(itemClassName).quantity < 1) {
-                this._items.delete(itemClassName);
-            }
+			this._items.get(itemClassName).quantity -= 1;
+			if (this._items.get(itemClassName).quantity < 1) {
+				this._items.delete(itemClassName);
+			}
 		} else {
-            console.log("You have no such item!");
-        }
+			console.log('You have no such item!');
+		}
 	}
 
 	flee() {
@@ -85,9 +130,12 @@ export class Player {
 			//this.endFight();
 		}
 
-        console.log( chalk.magenta( "Player tactically runs away from coding problems by restarting their computer!" ) );
-        console.log( chalk.red( "Windows update will not let user shut down! Back to the terminal!" ) );
-
+		console.log(
+			chalk.magenta(
+				`Player tactically runs away from coding problems by restarting their computer!
+				Windows update will not let user shut down! Back to the terminal!`
+			)
+		);
 	}
 
 	endFight() {
@@ -128,7 +176,7 @@ export class Player {
 
 	parseItemsToString() {
 		let stringArray = [];
-		for (let [itemClassName, item] of this._items) {
+		for (let [_, item] of this._items) {
 			stringArray.push(`${item.name}: ${item.quantity}`);
 		}
 		return stringArray.join(', ');
@@ -136,65 +184,28 @@ export class Player {
 }
 
 export class Protagonist extends Player {
-	constructor(race,
-		name,
-		health,
-		attackRating,
-		defenseRating,
-		attackMessage,
-		defendMessage) {
-        super(race,
-		name,
-		health,
-		attackRating,
-		defenseRating,
-		attackMessage,
-		defendMessage);
-        this.name = "N00b";
-        this.attackMessage = "I think this should work... \n" + "Nope, still broken...";
-        this.defendMessage = "Oh no, the code set my house on fire!";
+	constructor() {
+		super();
+		this.name = 'N00b';
+		this.attackMessage = 'You attack... \n' + 'Hopefully no errors :)';
+		this.defendMessage = 'You turn on windows firewall gaining defense';
 	}
 }
 
 export class Monster extends Player {
-	constructor(
-		race,
-		name,
-		health,
-		attackRating,
-		defenseRating,
-		attackMessage,
-		defendMessage
-	) {
-		super(
-			race,
-			name,
-			health,
-			attackRating,
-			defenseRating,
-			attackMessage,
-			defendMessage
-		);
-        this.name = "Android Bill Gates";
-        this.attackMessage = "Would you like a Windows update? Have one anyway!";
-        this.defendMessage = "Android Bill Gates defends with antitrust lawyers!";
+	constructor() {
+		super();
 	}
 
-	pickRandomChoice( otherPlayer ) {
+	pickRandomChoice(otherPlayer) {
 		//Ideally is quite clever in that they might defend on low health / use all available items
-		//Behaviour tree npm? Alternatively, nest switch cases [may be an antipattern / considered bad practice] or use polymorphism
+		//Behaviour tree npm? Alternatively, nest switch cases [may be an antipattern / considered bad practice]
 
-        let number = Math.random();
-        if(number <= 0.9){
-            this.attack( otherPlayer );
-            otherPlayer.health -= 25;
-            this.attackRating += 50;
-        }
-        else{
-            this.defend();
-            this.defenseRating += 50;
-        }
-
-
+		let number = Math.random();
+		if (number <= 0.7) {
+			this.attack(otherPlayer);
+		} else {
+			this.defend();
+		}
 	}
 }
