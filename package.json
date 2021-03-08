@@ -1,0 +1,23 @@
+{
+  "type": "module",
+  "name": "miniproject",
+  "version": "1.0.0",
+  "description": "RPG video game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zmervey18/JS-Project-9-Game.git"
+  },
+  "author": "\"John Herman, Zeynep Yanar and Samy Adams\"",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zmervey18/JS-Project-9-Game/issues"
+  },
+  "homepage": "https://github.com/zmervey18/JS-Project-9-Game#readme",
+  "dependencies": {
+    "chalk": "^4.1.0"
+  }
+}
